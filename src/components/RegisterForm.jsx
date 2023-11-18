@@ -1,81 +1,109 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
-import React, {useState} from 'react'
+import { validateEmail } from '../utils/validations'
+import React, { useState } from 'react'
+import firebase from "firebase/compat";
 
 const RegisterForm = () => {
-
     const [formData, setFormData] = useState({
         email: '',
         password: '',
         repeatPassword: ''
-    })
+    });
 
-  return (
-    <>
-        <TextInput 
-        placeholder = 'email' 
-        style={styles.input}
-        placeholderTextColor={'#cbcbcb'}
-        onChange={e=>setFormData({...formData,email:e.nativeEvent.text})}
-        keyboardType='email-address'
-        autoCapitalize='none'
-        autoCorrect={false}
-        />
-        <TextInput 
-        placeholder = 'Password' 
-        style={styles.input}
-        placeholderTextColor={'#cbcbcb'}
-        onChange={e=>setFormData({...formData,password:e.nativeEvent.text})}
-        secureTextEntry={true}
-        // keyboardType={'visible-password'}
-        autoCapitalize='none'
-        autoCorrect={false}
-        />
+    const [errores, setErrores] = useState({});
 
-<TextInput 
-        placeholder = 'Repeat password' 
-        style={styles.input}
-        placeholderTextColor={'#cbcbcb'}
-        onChange={e=>setFormData({...formData,repeatPassword:e.nativeEvent.text})}
-        secureTextEntry={true}
-        // keyboardType='visible-password'
-        autoCapitalize='none'
-        autoCorrect={false}
-        />
-        
-        <TouchableOpacity style={styles.btn} onPress={()=>{
-            console.log(formData);
-                
-        }}>
+    const validarDatos = () => {
+        if (
+            formData.email !== "" &&
+            formData.password !== "" &&
+            formData.repeatPassword !== ""
+        ) {
+            if (!validateEmail(formData.email)) {
+                console.log("email incorrecto");
+                setErrores({ errorCorreo: true });
+            }
+            if (formData.password !== formData.repeatPassword) {
+                console.log("password incorrecto");
+                setErrores({ errorPassword: true });
+            }
 
-        <Text style={styles.texto}>Registrate</Text>
-        </TouchableOpacity>
+            console.log("los datos pasaron");
+            firebase
+                .auth()
+                .createUserWithEmailAndPassword(formData.email, formData.password);
+        } else {
+            setErrores({
+                errorCorreo: true,
+                errorPassword: true,
+            });
+        }
+    };
 
-    </>
-  )
-}
+    return (
+        <>
+            <TextInput
+                placeholder='email'
+                style={styles.input}
+                placeholderTextColor={'#cbcbcb'}
+                onChangeText={(text) => setFormData({ ...formData, email: text })}
+                keyboardType='email-address'
+                autoCapitalize='none'
+                autoCorrect={false}
+            />
+            <TextInput
+                placeholder='Password'
+                style={styles.input}
+                placeholderTextColor={'#cbcbcb'}
+                onChangeText={(text) => setFormData({ ...formData, password: text })}
+                secureTextEntry={true}
+                autoCapitalize='none'
+                autoCorrect={false}
+            />
+
+            <TextInput
+                placeholder='Repeat password'
+                style={styles.input}
+                placeholderTextColor={'#cbcbcb'}
+                onChangeText={(text) => setFormData({ ...formData, repeatPassword: text })}
+                secureTextEntry={true}
+                autoCapitalize='none'
+                autoCorrect={false}
+            />
+
+            {errores.errorCorreo && <Text>Error: Email incorrecto</Text>}
+            {errores.errorPassword && <Text>Error: Contraseñas no coinciden</Text>}
+
+            <TouchableOpacity style={styles.btn} onPress={validarDatos}>
+                <Text style={styles.texto}>Registrate</Text>
+            </TouchableOpacity>
+        </>
+    );
+};
+
 const styles = StyleSheet.create({
-    input:{
+    input: {
         width: '80%',
         padding: 15,
-        backgroundColor: '#333',
+        backgroundColor: '#334',
         borderRadius: 15,
         color: 'white',
         fontSize: 16,
         marginVertical: 10,
     },
-    texto:{
-        color:'white',
+    texto: {
+        color: 'white',
         marginTop: 20,
         fontSize: 20,
     },
-    btn:{
+    btn: {
         marginTop: 20,
         width: '80%',
-        backgroundColor: '#243e36',
+        backgroundColor: 'black',
         borderRadius: 12,
         alignItems: 'center',
+        justifyContent: 'center',
         padding: 10,
     },
-})
+});
 
-export default RegisterForm
+export default RegisterForm;
