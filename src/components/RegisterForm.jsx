@@ -3,6 +3,9 @@ import { validateEmail } from '../utils/validations'
 import React, { useState } from 'react'
 import firebase from "firebase/compat";
 
+
+// la contraseña debe tener 6 digitos
+
 const RegisterForm = () => {
     const [formData, setFormData] = useState({
         email: '',
