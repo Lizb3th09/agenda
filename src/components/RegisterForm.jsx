@@ -47,6 +47,9 @@ const RegisterForm = () => {
 
     return (
         <>
+
+        <Text style={styles.text}>Registro</Text> 
+
             <TextInput
                 placeholder='email'
                 style={styles.input}
@@ -84,7 +87,6 @@ const RegisterForm = () => {
                 <Text style={styles.texto}>Registrate</Text> 
             </TouchableOpacity>
 
-         
 
         </>
     );
@@ -118,7 +120,12 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 15,
         textAlign: 'center', 
-      }
+      },
+      text:{
+        fontSize: 20,
+        color: 'white',
+        padding:15,
+      },
 });
 
 export default RegisterForm;
