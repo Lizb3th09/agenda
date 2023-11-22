@@ -29,7 +29,8 @@ const Auth = () => {
       <SafeAreaView style={styles.container}>
         {!show ? (
           <>
-            <Text style={styles.tex}>INICIO DE SECCION </Text>
+            <Text style={styles.text}>INICIO DE SECCION</Text>
+
             <TextInput
               placeholder="Username"
               style={styles.input}
@@ -52,16 +53,15 @@ const Auth = () => {
               autoCapitalize="none"
               autoCorrect={false}
             />
-
-            <TouchableOpacity style={styles.btn} onPress={iniciarSesion}>
-              <Text style={styles.texto}>Iniciar</Text>
-            </TouchableOpacity>
-
             <TouchableOpacity
               onPress={() => {
                 setShow(!show);
               }}
             >
+              <TouchableOpacity style={styles.btn} onPress={iniciarSesion}>
+                <Text style={styles.texto}>Iniciar </Text>
+              </TouchableOpacity>
+
               <Text style={styles.tex}>Register</Text>
             </TouchableOpacity>
           </>
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   btn: {
-    width: '80%', // Ajusta este valor según tus necesidades
+    width: '50%',
     backgroundColor: 'black',
     borderRadius: 12,
     padding: 10,
@@ -117,4 +117,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Auth;
+export default Auth;
