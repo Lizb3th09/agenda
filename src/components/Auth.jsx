@@ -68,6 +68,12 @@ const Auth = () => {
         ) : (
           <>
             <RegisterForm show={show} setShow={setShow} />
+            <TouchableOpacity style={styles.btn} onPress={()=>{
+                 setShow(!show)
+                }}>
+                <Text style={styles.texto}>cancelar</Text> 
+            </TouchableOpacity>
+
           </>
         )}
       </SafeAreaView>
