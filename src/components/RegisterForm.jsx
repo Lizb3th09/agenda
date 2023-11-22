@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import firebase from "firebase/compat";
 
 
+
 // la contraseña debe tener 6 digitos
 
 const RegisterForm = () => {
@@ -42,6 +43,8 @@ const RegisterForm = () => {
         }
     };
 
+    
+
     return (
         <>
             <TextInput
@@ -76,12 +79,20 @@ const RegisterForm = () => {
             {errores.errorCorreo && <Text>Error: Email incorrecto</Text>}
             {errores.errorPassword && <Text>Error: Contraseñas no coinciden</Text>}
 
+
             <TouchableOpacity style={styles.btn} onPress={validarDatos}>
-                <Text style={styles.texto}>Registrate</Text>
+                <Text style={styles.texto}>Registrate</Text> 
             </TouchableOpacity>
+
+         
+
         </>
     );
 };
+
+
+
+
 
 const styles = StyleSheet.create({
     input: {
@@ -93,20 +104,21 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginVertical: 10,
     },
-    texto: {
-        color: 'white',
-        marginTop: 20,
-        fontSize: 20,
-    },
     btn: {
-        marginTop: 20,
-        width: '80%',
+        width: '50%',
         backgroundColor: 'black',
         borderRadius: 12,
+        padding: 10, // Añade relleno para hacer el botón más estilizado
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 10,
-    },
+        marginTop: 10,
+      }
+      ,
+      texto: {
+        color: 'white',
+        fontSize: 15,
+        textAlign: 'center', 
+      }
 });
 
 export default RegisterForm;

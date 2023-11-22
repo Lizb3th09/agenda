@@ -23,6 +23,7 @@ export default function App() {
       <SafeAreaView style={styles.container}>
         {user ? <Text>Estas logeado</Text> : <Auth/>}
       </SafeAreaView>
+
     </>
   );
 }
