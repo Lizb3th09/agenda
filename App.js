@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import firebase from './src/utils/firebase';
 import 'firebase/compat/auth';
 import Auth from './src/components/Auth';
+import Logout from './src/components/Logout';
+
 
 export default function App() {
 
@@ -21,7 +23,9 @@ export default function App() {
   return (
     <>
       <SafeAreaView style={styles.container}>
-        {user ? <Text>Estas logeado</Text> : <Auth/>}
+      {user ? <Logout /> : <Auth />}
+      
+        
       </SafeAreaView>
 
     </>

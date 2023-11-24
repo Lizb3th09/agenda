@@ -1,14 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { SafeAreaView, StyleSheet,Text,TextInput,TouchableOpacity,} from "react-native";
 import RegisterForm from "./RegisterForm";
 import firebase from "../utils/firebase";
+
+
+
 
 const Auth = () => {
   const [show, setShow] = useState(false);
@@ -23,47 +20,52 @@ const Auth = () => {
       .signInWithEmailAndPassword(dataLogin.email, dataLogin.password);
   };
 
+
   return (
     <>
-      <StatusBar barStyle={"light-content"} />
+    
       <SafeAreaView style={styles.container}>
         {!show ? (
           <>
-            <Text style={styles.text}>INICIO DE SECCION</Text>
+           <>
+           <Text style={styles.text}>INICIO DE SECCION</Text>
 
-            <TextInput
-              placeholder="Username"
-              style={styles.input}
-              placeholderTextColor={"#cbcbcb"}
-              onChange={(e) =>
-                setDataLogin({ ...dataLogin, email: e.nativeEvent.text })
-              }
-              secureTextEntry={false}
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-            <TextInput
-              placeholder="Password"
-              style={styles.input}
-              placeholderTextColor={"#cbcbcb"}
-              onChange={(e) =>
-                setDataLogin({ ...dataLogin, password: e.nativeEvent.text })
-              }
-              secureTextEntry={true}
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-            <TouchableOpacity
-              onPress={() => {
-                setShow(!show);
-              }}
-            >
-              <TouchableOpacity style={styles.btn} onPress={iniciarSesion}>
-                <Text style={styles.texto}>Iniciar </Text>
-              </TouchableOpacity>
+<TextInput
+  placeholder="Username"
+  style={styles.input}
+  placeholderTextColor={"#cbcbcb"}
+  onChange={(e) =>
+    setDataLogin({ ...dataLogin, email: e.nativeEvent.text })
+  }
+  secureTextEntry={false}
+  autoCapitalize="none"
+  autoCorrect={false}
+/>
+<TextInput
+  placeholder="Password"
+  style={styles.input}
+  placeholderTextColor={"#cbcbcb"}
+  onChange={(e) =>
+    setDataLogin({ ...dataLogin, password: e.nativeEvent.text })
+  }
+  secureTextEntry={true}
+  autoCapitalize="none"
+  autoCorrect={false}
+/>
 
-              <Text style={styles.tex}>Register</Text>
-            </TouchableOpacity>
+<TouchableOpacity onPress={() => {setShow(!show);}}>
+    <TouchableOpacity style={styles.btn} onPress={iniciarSesion}>
+      <Text style={styles.texto}>Iniciar </Text>
+    </TouchableOpacity>
+</TouchableOpacity>
+
+
+  <TouchableOpacity onPress={() => {setShow(!show);}}>
+    <Text style={styles.tex}>Register</Text>
+  </TouchableOpacity>  
+           
+           </>
+
           </>
         ) : (
           <>
@@ -123,4 +125,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Auth;
+export default Auth;
