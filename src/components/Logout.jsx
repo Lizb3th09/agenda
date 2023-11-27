@@ -25,8 +25,8 @@ const Logout = () => {
 			</View>
 
 			<View style={styles.buttonContainer}>
-				<Button onPress={formToggle} title="Agregar" color="#5e548e"  />
-				<Button onPress={closeSession} title="salir" color="#5e548e"/>
+				<Button onPress={formToggle} title="Agregar" color="black"  />
+				<Button onPress={closeSession} title="salir" color="black"/>
 			</View>
 		</View>
 	);

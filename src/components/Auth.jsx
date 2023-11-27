@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    color: 'white',
+    color: 'black',
     padding: 15,
   },
   btn: {
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   tex: {
-    color: 'white',
+    color: 'black',
     fontSize: 15,
     textAlign: 'center',
     padding: 14,

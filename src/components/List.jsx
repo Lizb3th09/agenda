@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   contactCard: {
-    backgroundColor: "#dee2ff",
+    backgroundColor: "#95d5b2",
     flexDirection: "column",
     color: "white",
     padding: 10,

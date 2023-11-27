@@ -30,7 +30,7 @@ const Formulario= ({ showForm, setShowForm }) => {
 
 	return (
 		<View style={styles.mainContainer}>
-			<Text style={styles.titleText}>Registrar Contactos</Text>
+			<Text style={styles.titleText}>Register Contacto</Text>
 			<ScrollView>
 				<Text style={styles.text}>Contact Name</Text>
 				<View>
@@ -75,7 +75,7 @@ const Formulario= ({ showForm, setShowForm }) => {
 						headerTextStyle={(color = "white")}
 					/>
 				</View>
-				<Button onPress={addUser} title="Add User" disabled={name === ""} />
+				<Button onPress={addUser} title="Guardar"color="black"  disabled={name === ""} />
 				<TouchableOpacity
 					style={styles.btn}
 					onPress={() => {
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
 	btn: {
 		marginTop: 20,
 		width: "90%",
-		backgroundColor: "black",
+		backgroundColor: "#2b2c28",
 		borderRadius: 12,
 		alignItems: "center",
 		justifyContent: "center",
