@@ -1,11 +1,7 @@
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
-import { validateEmail } from '../utils/validations'
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { validateEmail } from '../utils/validations';
 import firebase from "firebase/compat";
-
-
-
-// la contraseña debe tener 6 digitos
 
 const RegisterForm = () => {
     const [formData, setFormData] = useState({
@@ -18,7 +14,7 @@ const RegisterForm = () => {
 
     const validarDatos = () => {
         if (
-            formData.email !== "" && 
+            formData.email !== "" &&
             formData.password !== "" &&
             formData.repeatPassword !== ""
         ) {
@@ -31,10 +27,22 @@ const RegisterForm = () => {
                 setErrores({ errorPassword: true });
             }
 
+            if (formData.password.length < 6) {
+                Alert.alert("Advertencia", "La contraseña debe tener al menos 6 caracteres");
+                return;
+            }
+
             console.log("los datos pasaron");
             firebase
                 .auth()
-                .createUserWithEmailAndPassword(formData.email, formData.password);
+                .createUserWithEmailAndPassword(formData.email, formData.password)
+                .then(() => {
+                    // Handle successful registration if needed
+                })
+                .catch((error) => {
+                    console.error("Error en el registro:", error.message);
+                    Alert.alert("Error", "Error en el registro: " + error.message);
+                });
         } else {
             setErrores({
                 errorCorreo: true,
@@ -43,13 +51,10 @@ const RegisterForm = () => {
         }
     };
 
-    
-
     return (
         <>
+            <Text style={styles.text}>Registro</Text>
 
-        <Text style={styles.text}>Registro</Text> 
-   
             <TextInput
                 placeholder='email'
                 style={styles.input}
@@ -60,7 +65,7 @@ const RegisterForm = () => {
                 autoCorrect={false}
             />
 
-<Text style={styles.texto1}>La contraseña debetener ser 6 digitos</Text> 
+            <Text style={styles.texto1}>La contraseña debe tener al menos 6 caracteres</Text>
             <TextInput
                 placeholder='Password'
                 style={styles.input}
@@ -84,19 +89,12 @@ const RegisterForm = () => {
             {errores.errorCorreo && <Text>coloca los datos Correctamente</Text>}
             {errores.errorPassword && <Text>mal</Text>}
 
-
             <TouchableOpacity style={styles.btn} onPress={validarDatos}>
-                <Text style={styles.texto}>Registrate</Text> 
+                <Text style={styles.texto}>Registrate</Text>
             </TouchableOpacity>
-
-
         </>
     );
 };
-
-
-
-//arreglar las validaciones 
 
 const styles = StyleSheet.create({
     input: {
@@ -112,27 +110,26 @@ const styles = StyleSheet.create({
         width: '50%',
         backgroundColor: 'black',
         borderRadius: 12,
-        padding: 10, // Añade relleno para hacer el botón más estilizado
+        padding: 10,
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 10,
-      }
-      ,
-      texto1: {
+    },
+    texto1: {
         color: 'black',
         fontSize: 15,
-        textAlign: 'center', 
-      },
-      text:{
+        textAlign: 'center',
+    },
+    text: {
         fontSize: 20,
         color: 'black',
-        padding:15,
-      },
-      texto: {
+        padding: 15,
+    },
+    texto: {
         color: 'white',
         fontSize: 15,
-        textAlign: 'center', 
-      },
+        textAlign: 'center',
+    },
 });
 
 export default RegisterForm;
