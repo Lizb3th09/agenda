@@ -65,7 +65,7 @@ const RegisterForm = () => {
                 autoCorrect={false}
             />
 
-            <Text style={styles.texto1}>La contraseña debe tener al menos 6 caracteres</Text>
+     
             <TextInput
                 placeholder='Password'
                 style={styles.input}
