@@ -15,11 +15,27 @@ const Auth = () => {
   });
 
   const iniciarSesion = () => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(dataLogin.email, dataLogin.password);
+
+//validaciones
+    
+firebase
+			.auth()
+			.signInWithEmailAndPassword(dataLogin.email, dataLogin.password)
+			.then((userCredential) => {
+				
+				const user = userCredential.user;
+				
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+        alert('Coloque bien los Datos');
+			});
   };
 
+
+
+  
 
   return (
     <>

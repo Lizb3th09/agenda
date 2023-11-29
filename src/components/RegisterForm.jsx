@@ -18,16 +18,16 @@ const RegisterForm = () => {
 
     const validarDatos = () => {
         if (
-            formData.email !== "" &&
+            formData.email !== "" && 
             formData.password !== "" &&
             formData.repeatPassword !== ""
         ) {
             if (!validateEmail(formData.email)) {
-                console.log("email incorrecto");
+                console.log("coloca los campos correctamente");
                 setErrores({ errorCorreo: true });
             }
             if (formData.password !== formData.repeatPassword) {
-                console.log("password incorrecto");
+                console.log("coloca los datos correctamente");
                 setErrores({ errorPassword: true });
             }
 
@@ -49,7 +49,7 @@ const RegisterForm = () => {
         <>
 
         <Text style={styles.text}>Registro</Text> 
-
+   
             <TextInput
                 placeholder='email'
                 style={styles.input}
@@ -59,6 +59,8 @@ const RegisterForm = () => {
                 autoCapitalize='none'
                 autoCorrect={false}
             />
+
+<Text style={styles.texto1}>La contraseña debetener ser 6 digitos</Text> 
             <TextInput
                 placeholder='Password'
                 style={styles.input}
@@ -79,8 +81,8 @@ const RegisterForm = () => {
                 autoCorrect={false}
             />
 
-            {errores.errorCorreo && <Text>Error: Email incorrecto</Text>}
-            {errores.errorPassword && <Text>Error: Contraseñas no coinciden</Text>}
+            {errores.errorCorreo && <Text>coloca los datos Correctamente</Text>}
+            {errores.errorPassword && <Text>mal</Text>}
 
 
             <TouchableOpacity style={styles.btn} onPress={validarDatos}>
@@ -94,7 +96,7 @@ const RegisterForm = () => {
 
 
 
-
+//arreglar las validaciones 
 
 const styles = StyleSheet.create({
     input: {
@@ -116,15 +118,20 @@ const styles = StyleSheet.create({
         marginTop: 10,
       }
       ,
-      texto: {
-        color: 'white',
+      texto1: {
+        color: 'black',
         fontSize: 15,
         textAlign: 'center', 
       },
       text:{
         fontSize: 20,
-        color: 'white',
+        color: 'black',
         padding:15,
+      },
+      texto: {
+        color: 'white',
+        fontSize: 15,
+        textAlign: 'center', 
       },
 });
 
