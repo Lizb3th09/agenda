@@ -1,56 +1,82 @@
-import { View, Text, Button, TouchableOpacity, StyleSheet } from "react-native";
+// Logout.js
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import firebase from "../utils/firebase";
-import Formulario from "./Formulario";
+import RegisterContact from "./RegisterContact";
 import List from "./List";
-
+import { getAuth } from "firebase/auth";
 
 const Logout = () => {
-	const [showForm, setShowForm] = useState(false);
-	const closeSession = () => {
-		firebase.auth().signOut();
-	};
-	const formToggle = () => {
-		showForm == true ? setShowForm(false) : setShowForm(true);
-	};
+  const [showForm, setShowForm] = useState(false);
+  const [formButtonText, setFormButtonText] = useState("Add account");
 
-	return (
-		<View style={styles.mainContainer}>
-			<View style={styles.contactsContainer}>
-				{showForm ? (
-					<Formulario showForm={showForm} setShowForm={setShowForm} />
-				) : (
-					<List/>
-				)}
-			</View>
+  const closeSession = () => {
+    firebase.auth().signOut();
+  };
 
-			<View style={styles.buttonContainer}>
-				<Button onPress={formToggle} title="Agregar" color="black"  />
-				<Button onPress={closeSession} title="salir" color="black"/>
-			</View>
-		</View>
-	);
+  const formToggle = () => {
+    setShowForm((prevShowForm) => !prevShowForm);
+    setFormButtonText(showForm ? "Add account" : "Show contacts");
+  };
+
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
+
+  return (
+    <View style={styles.mainContainer}>
+      <View style={styles.contactsContainer}>
+        {showForm ? (
+          <RegisterContact showForm={showForm} setShowForm={setShowForm} currentUser={currentUser} />
+        ) : (
+          <List currentUser={currentUser} />
+        )}
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={formToggle}>
+          <Text style={styles.buttonText}>{formButtonText}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={closeSession}>
+          <Text style={styles.buttonText}>Log out</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 };
+
 const styles = StyleSheet.create({
-	text: {
-		color: "white",
-	},
-	mainContainer: {
-		flex: 1,
-	},
-	contactsContainer: {
-		flex: 14,
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	buttonContainer: {
-		flex: 1,
-		gap: 50,
-		paddingVertical: 20,
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "center",
-    
-	},
+  text: {
+    color: "white",
+  },
+  mainContainer: {
+    flex: 1,
+  },
+  contactsContainer: {
+    flex: 14,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 20,
+  },
+  button: {
+    flex: 1,
+    backgroundColor: "#0a9396",
+    borderRadius: 12,
+    marginHorizontal: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 7,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+  },
 });
+
 export default Logout;

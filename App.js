@@ -6,6 +6,8 @@ import 'firebase/compat/auth';
 import Auth from './src/components/Auth';
 import Logout from './src/components/Logout';
 
+import { initializeApp } from "firebase/app";
+
 
 export default function App() {
 
@@ -35,7 +37,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#daf7dc',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
     height:'100%'

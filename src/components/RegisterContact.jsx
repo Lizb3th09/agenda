@@ -1,36 +1,63 @@
 "use client";
-import React, { useEffect } from "react";
-import { useState } from "react";
-import {Button,ScrollView,StyleSheet,Text,TextInput,TouchableOpacity,View,} from "react-native";
+import React, { useEffect, useState } from "react";
+import { Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from "react-native";
 import { addDoc, collection } from "firebase/firestore";
 import { FIRESTORE_DB } from "../utils/firebase";
 
 import DateTimePicker from 'react-native-ui-datepicker';
 import dayjs from "dayjs";
 
+const RegisterContact = ({ currentUser }) => {
+  const [value, setValue] = useState(dayjs());
+  const [name, setName] = useState();
+  const [phone, setPhone] = useState();
+  const [email, setEmail] = useState();
 
-const Formulario= ({ showForm, setShowForm }) => {
-	const [value, setValue] = useState(dayjs());
-	const [users, setUsers] = useState();
-	const [name, setName] = useState();
-	const [phone, setPhone] = useState();
-	const [email, setEmail] = useState();
+  useEffect(() => {}, []);
 
-	useEffect(() => {}, []);
-	const addUser = async () => {
-		const user = await addDoc(collection(FIRESTORE_DB, "contactos"), {
-			name: name,
-			phone: phone,
-			email: email,
-			date: value,
-		});
-		console.log(user);
-	};
-	const [userData, setUserData] = useState("");
+  const validarDatos = () => {
+    if (!name || !phone || !email ) {
+      mostrarAlerta('Error', 'Todos los campos son obligatorios');
+      return false;
+    }
+
+    // Puedes agregar otras validaciones según tus necesidades
+
+    return true;
+  };
+
+  const addUser = async () => {
+    if (!validarDatos()) {
+      return;
+    }
+
+    try {
+      const user = await addDoc(collection(FIRESTORE_DB, currentUser.uid), {
+        name: name,
+        phone: phone,
+        email: email,
+        date: value,
+      });
+
+      console.log(user);
+
+      // Éxito al agregar usuario
+      mostrarAlerta('Éxito', 'Contacto agregado exitosamente.');
+    } catch (error) {
+      // Manejar errores al agregar usuario
+      console.error("Error al agregar usuario:", error.message);
+      mostrarAlerta('Error', `Error al agregar contacto: ${error.message}`);
+    }
+  };
+
+  const mostrarAlerta = (titulo, mensaje) => {
+    Alert.alert(titulo, mensaje);
+  };
+	
 
 	return (
 		<View style={styles.mainContainer}>
-			<Text style={styles.titleText}>Register Contacto</Text>
+			<Text style={styles.titleText}>Registrar Contactos</Text>
 			<ScrollView>
 				<Text style={styles.text}>Contact Name</Text>
 				<View>
@@ -75,15 +102,12 @@ const Formulario= ({ showForm, setShowForm }) => {
 						headerTextStyle={(color = "white")}
 					/>
 				</View>
-				<Button onPress={addUser} title="Guardar"color="black"  disabled={name === ""} />
-				<TouchableOpacity
-					style={styles.btn}
-					onPress={() => {
-						setShowForm(!showForm);
-					}}
-				>
-					<Text style={styles.text}>Ver</Text>
+				<TouchableOpacity style={styles.btn} onPress={addUser}>
+
+					<Text style={styles.textinput}>Add contact</Text>
 				</TouchableOpacity>
+				{/* <Button onPress={addUser} title="Add User" disabled={name === ""} /> */}
+				
 			</ScrollView>
 		</View>
 	);
@@ -95,7 +119,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 		justifyContent: "center",
 		alignItems: "center",
-		width: 300,
+		width: 330,
 		padding: 20,
 		borderRadius: 20,
 		marginTop:44,
@@ -103,16 +127,16 @@ const styles = StyleSheet.create({
 	input: {
 		width: 250,
 		height: 30,
-		
+		backgroundColor:'white',
 		borderRadius: 10,
 		color: "black",
 		fontSize: 16,
-		marginVertical: 5,
+		marginVertical: 10,
 	},
 	btn: {
-		marginTop: 20,
+		marginTop:20,
 		width: "90%",
-		backgroundColor: "#2b2c28",
+		backgroundColor: "#0f4c5c",
 		borderRadius: 12,
 		alignItems: "center",
 		justifyContent: "center",
@@ -121,12 +145,21 @@ const styles = StyleSheet.create({
 	},
 	titleText: {
 		color: "black",
-		fontSize: 20,
+		fontSize: 22,
 		marginBottom: 15,
+		fontFamily: 'serif',
 	},
 	text: {
-		color: "white",
+		color: "black",
 	},
+	textinput:{
+		color: 'white',
+		fontFamily: 'serif',
+		
+	},
+	container:{
+		marginTop:30
+	}
 });
 
-export default Formulario;
+export default RegisterContact;
