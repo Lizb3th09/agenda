@@ -19,12 +19,14 @@ const RegisterForm = () => {
             formData.repeatPassword !== ""
         ) {
             if (!validateEmail(formData.email)) {
-                console.log("coloca los campos correctamente");
                 setErrores({ errorCorreo: true });
+                Alert.alert("Error", "Por favor, coloca el correo correctamente");
+                return;
             }
             if (formData.password !== formData.repeatPassword) {
-                console.log("coloca los datos correctamente");
                 setErrores({ errorPassword: true });
+                Alert.alert("Error", "Las contraseñas no coinciden");
+                return;
             }
 
             if (formData.password.length < 6) {
@@ -32,12 +34,12 @@ const RegisterForm = () => {
                 return;
             }
 
-            console.log("los datos pasaron");
             firebase
                 .auth()
                 .createUserWithEmailAndPassword(formData.email, formData.password)
                 .then(() => {
-                    // Handle successful registration if needed
+                  
+                    Alert.alert("Éxito", "Registro exitoso");
                 })
                 .catch((error) => {
                     console.error("Error en el registro:", error.message);
@@ -48,6 +50,7 @@ const RegisterForm = () => {
                 errorCorreo: true,
                 errorPassword: true,
             });
+            Alert.alert("Error", "Por favor, completa todos los campos");
         }
     };
 
@@ -65,7 +68,6 @@ const RegisterForm = () => {
                 autoCorrect={false}
             />
 
-     
             <TextInput
                 placeholder='Password'
                 style={styles.input}
@@ -85,9 +87,6 @@ const RegisterForm = () => {
                 autoCapitalize='none'
                 autoCorrect={false}
             />
-
-            {errores.errorCorreo && <Text>coloca los datos Correctamente</Text>}
-            {errores.errorPassword && <Text>mal</Text>}
 
             <TouchableOpacity style={styles.btn} onPress={validarDatos}>
                 <Text style={styles.texto}>Registrate</Text>
@@ -114,11 +113,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 10,
-    },
-    texto1: {
-        color: 'black',
-        fontSize: 15,
-        textAlign: 'center',
     },
     text: {
         fontSize: 20,
